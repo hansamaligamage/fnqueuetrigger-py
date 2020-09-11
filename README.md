@@ -61,3 +61,24 @@ def insert_vertices(client, query):
     else:
         logging.info("Something went wrong with this query: {0}".format(query))
 ```
+
+### Insert edge / relationships between nodes
+```
+try:
+    connections = person['connections']
+except KeyError :
+    connections = None
+
+if connections != None : 
+    for connection in connections :
+        query = "g.V('" + person['id'] + "').addE('" +  connection['relationship'] + "')
+            .to(g.V('" + connection['relatedperson'] + "'))"
+        insert_edges(client, query)
+            
+def insert_edges(client, query):
+    callback = client.submitAsync(query)
+    if callback.result() is not None:
+        print("\tInserted this edge:\n\t{0}\n".format(callback.result().one()))
+    else:
+        print("Something went wrong with this query:\n\t{0}".format(query))
+```
