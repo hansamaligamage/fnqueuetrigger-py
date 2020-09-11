@@ -26,8 +26,8 @@ def main(msg: func.QueueMessage) -> None:
             insert_edges(client, query)
 
 def createclient ():
-    graphclient = client.Client('wss://persongraph.gremlin.cosmosdb.azure.com:443/', 'g', username="/dbs/persondb/colls/profile",
-         password="ojkqBjav8vMWmFJOIeg3vaZWQ3b1CDKkyWKt4A4CN8bnwyDbvep9vrrxXOfwxvEGX15mnrbDDCmp2IMbaktzVA==", message_serializer=serializer.GraphSONSerializersV2d0())
+    graphclient = client.Client('wss://<COSMOS DB ACCOUNT NAME>.gremlin.cosmosdb.azure.com:443/', 'g', username="/dbs/<DATABASE>/colls/<COLLECTION/CONTAINER>",
+         password="<COSMOS DB ACCOUNT KEY>", message_serializer=serializer.GraphSONSerializersV2d0())
     return graphclient
 
 def cleanup_graph(client):
