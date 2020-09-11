@@ -13,3 +13,37 @@ This is a Queue trigger function written in Python in Visual Studio Code as the 
  * Create a database and graph inside the Cosmos DB account, use the same values for the settings database and collection entries
  * Open the solution file in Visual Studio and run the project
  * Insert a new item in the queue and check it is inserted to the graph database
+
+## Code snippets
+### Queue trigger to track new items
+```
+import logging
+import json
+from gremlin_python.driver import client, serializer
+
+import azure.functions as func
+
+def main(msg: func.QueueMessage) -> None:
+    logging.info('Python queue trigger function processed a queue item: %s', msg.get_body().decode('utf-8'))
+
+    personstring = msg.get_body().decode('utf-8')
+    person = json.loads(personstring)
+```
+
+### Clean up the graph
+```
+def cleanup_graph(client):
+    callback = client.submitAsync(_gremlin_cleanup_graph)
+    if callback.result() is not None:
+        logging.info("\tCleaned up the graph!")
+ ```
+
+### Create Graph client
+```
+def createclient ():
+    graphclient = client.Client('wss://persongraph.gremlin.cosmosdb.azure.com:443/', 'g', 
+      username="/dbs/persondb/colls/profile",
+      password="ojkqBjav8vMWmFJOIeg3vaZWQ3b1CDKkyWKt4A4CN8bnwyDbvep9vrrxXOfwxvEGX15mnrbDDCmp2IMbaktzVA==", 
+      message_serializer=serializer.GraphSONSerializersV2d0())
+    return graphclient
+```
