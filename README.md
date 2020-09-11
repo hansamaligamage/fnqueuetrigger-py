@@ -47,3 +47,17 @@ def createclient ():
       message_serializer=serializer.GraphSONSerializersV2d0())
     return graphclient
 ```
+
+### Insert vertice / node
+```
+query = "g.addV('profile').property('id', '" + person['id'] + "').property('name', '" + person['name'] +"')
+    .property('city', '" + person['city'] + "')"
+insert_vertices(graphclient, query)
+    
+def insert_vertices(client, query):
+    callback = client.submitAsync(query)
+    if callback.result() is not None:
+        logging.info("\tInserted this vertex:\n\t{0}\n".format(callback.result().one()))
+    else:
+        logging.info("Something went wrong with this query: {0}".format(query))
+```
