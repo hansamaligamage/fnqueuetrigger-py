@@ -1,4 +1,4 @@
-# Queue trigger in Python to create new nodes in the graph databases
+# Queue trigger in Python to create new nodes in the graph database
 
 This is a Queue trigger function written in Python in Visual Studio Code as the editor. When it recieves a item in the queue, creates a node in the Cosmos DB using Gremlin API. The beauty of a graph database is, it facililates to store the data or nodes along with its relationships 
 
